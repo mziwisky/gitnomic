@@ -1,5 +1,7 @@
 from flask import Flask
 import repository
+import scheduler
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -12,4 +14,5 @@ def getScore(username):
     return str(repository.find_user(username)['points'])
 
 if __name__ == '__main__':
+    scheduler.init_scheduler(repository.get_connection())
     app.run()
