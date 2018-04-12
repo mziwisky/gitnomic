@@ -35,3 +35,30 @@ def get_votes(pull_id):
     else:
       rejected.append(review)
   return (approved, rejected)
+
+def merge(pull):
+  url = "https://api.github.com/repos/" + 
+    os.environ.get("GITHUB_USERNAME") + "/" + 
+    os.environ.get("GITHUB_REPO") + "/pulls/" + 
+    pull['number'] + "/merge"
+  response = requests.put(url, auth=get_auth(), data={})
+  if response.status_code == 200:
+    #merge was successful
+    return True
+  else:
+    #Something went wrong. Oh well.
+    return False
+  
+def close(pull):
+  url = "https://api.github.com/repos/" + 
+    os.environ.get("GITHUB_USERNAME") + "/" + 
+    os.environ.get("GITHUB_REPO") + "/pulls/" + 
+    pull['number']
+  payload = {"state" : "closed"}
+  requests.put(url, auth=get_auth(), data=payload)
+  if response.status_code == 200:
+    #close was successful
+    return True
+  else:
+    #Something went wrong. Oh well.
+    return False
