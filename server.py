@@ -13,7 +13,7 @@ def hello_world():
     
 @app.route('/score/<username>')
 def getScore(username):
-  print username
+  print(username)
   return str(repository.find_user(username)['points'])
 
 if __name__ == '__main__':

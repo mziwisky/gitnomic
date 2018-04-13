@@ -14,7 +14,7 @@ def add_points(username, points):
   #If the player doesnt exist, adds them with the specified points
   db = get_connection()
   userDB = db.users
-  return userDB.update_one({"_id" : username}, {"$inc" : {"points" : 1}}, upsert=True)
+  return userDB.update_one({"_id" : username}, {"$inc" : {"points" : points}}, upsert=True)
   
 def get_game_state():
   #Gets the gamestate object from the db
@@ -39,4 +39,4 @@ def init_db(first_player):
 if __name__ == '__main__':
     #tests
     user = find_user('forrest')
-    print user['points']
+    print(user['points'])

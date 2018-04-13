@@ -7,13 +7,13 @@ def get_auth():
   return (os.environ.get('GITHUB_USERNAME'), os.environ.get("GITHUB_PASS"))
 
 def get_pulls():
-  url = "https://api.github.com/repos/" + os.environ.get("GITHUB_USERNAME") + "/" + os.environ.get("GITHUB_REPO") + "/pulls"
+  url = "https://api.github.com/repos/{}/{}/pulls".format(os.environ.get("GITHUB_USERNAME"), os.environ.get("GITHUB_REPO"))
   auth = get_auth()
   response = json.loads(requests.get(url, auth=get_auth()))
   return response
 
 def get_players():
-  url = "https://api.github.com/repos/" + os.environ.get("GITHUB_USERNAME") + "/" + os.environ.get("GITHUB_REPO") + "/contributors"
+  url = "https://api.github.com/repos/{}/{}/contributors".format(os.environ.get("GITHUB_USERNAME"), os.environ.get("GITHUB_REPO"))
   response = requests.get(url, auth=get_auth())
   player_data = json.loads(response.text)
   players = []
@@ -22,10 +22,7 @@ def get_players():
   return players
 
 def get_votes(pull_id):
-  url = "https://api.github.com/repos/" + 
-    os.environ.get("GITHUB_USERNAME") + "/" + 
-    os.environ.get("GITHUB_REPO") + "/pulls/" +
-    pull_id + "/reviews"
+  url = "https://api.github.com/repos/{}/{}/pulls/{}/reviews".format(os.environ.get("GITHUB_USERNAME"), os.environ.get("GITHUB_REPO"), pull_id)
   response = requests.get(url, auth=get_auth())
   approved = []
   rejected = []
@@ -37,10 +34,7 @@ def get_votes(pull_id):
   return (approved, rejected)
 
 def merge(pull):
-  url = "https://api.github.com/repos/" + 
-    os.environ.get("GITHUB_USERNAME") + "/" + 
-    os.environ.get("GITHUB_REPO") + "/pulls/" + 
-    pull['number'] + "/merge"
+  url = "https://api.github.com/repos/{}/{}/pulls/{}/merge".format(os.environ.get("GITHUB_USERNAME"), os.environ.get("GITHUB_REPO"), pull['number'])
   response = requests.put(url, auth=get_auth(), data={})
   if response.status_code == 200:
     #merge was successful
@@ -50,10 +44,7 @@ def merge(pull):
     return False
   
 def close(pull):
-  url = "https://api.github.com/repos/" + 
-    os.environ.get("GITHUB_USERNAME") + "/" + 
-    os.environ.get("GITHUB_REPO") + "/pulls/" + 
-    pull['number']
+  url = "https://api.github.com/repos/{}/{}/pulls/{}".format(os.environ.get("GITHUB_USERNAME"), os.environ.get("GITHUB_REPO"), pull['number'])
   payload = {"state" : "closed"}
   requests.put(url, auth=get_auth(), data=payload)
   if response.status_code == 200:
