@@ -1,6 +1,6 @@
-import git_repo
-import server
-import repository
+#import git_repo
+#import server
+#import repository
 from multiprocessing import Process
 import subprocess
 import time
@@ -30,7 +30,7 @@ def is_approved(yay, nay, total):
   
 def pick_next_player(players, current=None):
   #201. Players shall alternate in alphabetical order by [username].
-  players.sort(key=lambda x: x['id'])
+  players.sort()
   if not current:
     return players[0]
   for i in range(len(players)):
@@ -38,7 +38,7 @@ def pick_next_player(players, current=None):
       if i == len(players)-1:
         return players[0]
       else:
-        return players[i]
+        return players[i+1]
 
 
 def assign_points(votes, players, pull, approved):
@@ -77,6 +77,9 @@ def resolve_round():
         assign_points(votes, players, pull, False)
         git_repo.close(pull)
     break;
+  #get the next player and advance the round
+  next_player = pick_next_player([p['_id'] for p in players])
+  repository.advance_round(next_player)
   
   
 
@@ -94,7 +97,7 @@ def play_round():
 def init_game():
   #Sets up the game environment in case weve never been run before.
   #Also a good place to put commands which should only be run once.
-  if not os.environ.get("DB_SETUP_COMPLETE")
+  if not os.environ.get("DB_SETUP_COMPLETE"):
     players = git_repo.get_players()
     player1 = pick_next_player(players)
     repository.init_db()
@@ -104,7 +107,9 @@ def init_game():
   
 if __name__ == '__main__':
   #Start the database
-  database_process = subprocess.Popen(["mongod"])  
+  database_process = subprocess.Popen(["mongod"])
+  #give the database a chance to start up
+  sleep(5)
   #Do first time setup/onetime commands
   init_game()
   #START THE GAME
@@ -113,5 +118,4 @@ if __name__ == '__main__':
   #Rounds over. Clean up time.
   #Stop the db
   database_process.terminate()
-  #Return and exit for restart.
-  return 0
+  sleep(5)
