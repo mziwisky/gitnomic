@@ -1,6 +1,7 @@
 import os
 import requests
 import json
+import repository
 
 
 def get_auth():
@@ -9,7 +10,7 @@ def get_auth():
 def get_pulls():
   url = "https://api.github.com/repos/{}/{}/pulls".format(os.environ.get("GITHUB_USERNAME"), os.environ.get("GITHUB_REPO"))
   auth = get_auth()
-  response = json.loads(requests.get(url, auth=get_auth()))
+  response = json.loads(requests.get(url, auth=get_auth()).text)
   return response
 
 def get_players():
@@ -37,19 +38,19 @@ def merge(pull):
   url = "https://api.github.com/repos/{}/{}/pulls/{}/merge".format(os.environ.get("GITHUB_USERNAME"), os.environ.get("GITHUB_REPO"), pull['number'])
   response = requests.put(url, auth=get_auth(), data={})
   if response.status_code == 200:
-    #merge was successful
+    #Merge was successful
     return True
   else:
     #Something went wrong. Oh well.
-    return False
+    return response.status_code
   
 def close(pull):
   url = "https://api.github.com/repos/{}/{}/pulls/{}".format(os.environ.get("GITHUB_USERNAME"), os.environ.get("GITHUB_REPO"), pull['number'])
   payload = {"state" : "closed"}
-  requests.put(url, auth=get_auth(), data=payload)
+  response = requests.post(url, auth=get_auth(), data=json.dumps(payload))
   if response.status_code == 200:
-    #close was successful
+    #Close was successful
     return True
   else:
     #Something went wrong. Oh well.
-    return False
+    return response.text

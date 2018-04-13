@@ -1,6 +1,6 @@
-#import git_repo
-#import server
-#import repository
+import git_repo
+import server
+import repository
 from multiprocessing import Process
 import subprocess
 import time
@@ -18,13 +18,16 @@ def wins(user):
 
 def is_approved(yay, nay, total):
   #203. A rule-change is adopted if and only if the vote is unanimous among the eligible voters. If this rule is not amended by the end of the [fith round], it automatically changes to require only a simple majority.
+  #105. Every player is an eligible voter. Every eligible voter must participate in every vote on rule-changes.
   round = repository.get_game_state()["currentRound"]
   if round < 10:
-    if yay < total:
+    #unanimous, since players cant vote on their own proposals
+    if yay < total - 1:
       return False
     return True
   else:
-    if yay <= nay:
+    #simple majority, and every player voted besides the proposer.
+    if yay <= nay and yay + nay == total -1:
       return False
     return True
   
@@ -78,11 +81,8 @@ def resolve_round():
         git_repo.close(pull)
     break;
   #get the next player and advance the round
-  next_player = pick_next_player([p['_id'] for p in players])
+  next_player = pick_next_player(players)
   repository.advance_round(next_player)
-  
-  
-
   
 def play_round():
   #Start the game server
@@ -92,19 +92,24 @@ def play_round():
   time.sleep(604800) #1 week
   #End the server
   game_server.terminate()
+  return
   #Finish the round
   resolve_round()
   
 def init_game():
   #Sets up the game environment in case weve never been run before.
   #Also a good place to put commands which should only be run once.
-  if not os.environ.get("DB_SETUP_COMPLETE"):
+  config = repository.get_config()
+  os.environ["GITHUB_USERNAME"] = config["git_login"]
+  os.environ["GITHUB_REPO"] = config["git_repo"]
+  os.environ["GITHUB_PASS"] = config["git_password"]
+  if not "db_setup" in config:
     players = git_repo.get_players()
     player1 = pick_next_player(players)
     repository.init_db()
-    os.environ["DB_SETUP_COMPLETE"] = "TRUE"
-  pass
-
+    #Save that weve set up the db
+    config['db_setup'] = "complete"
+    repository.set_config(config)
   
 if __name__ == '__main__':
   #Start the database

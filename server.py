@@ -1,6 +1,5 @@
 from flask import Flask
 import repository
-import scheduler
 
 app = Flask(__name__)
 
