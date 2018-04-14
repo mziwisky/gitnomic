@@ -106,7 +106,7 @@ def init_game():
   if not "db_setup" in config:
     players = git_repo.get_players()
     player1 = pick_next_player(players)
-    repository.init_db()
+    repository.init_db(player1)
     #Save that weve set up the db
     config['db_setup'] = "complete"
     repository.set_config(config)
