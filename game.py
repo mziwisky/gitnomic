@@ -97,7 +97,7 @@ def play_round():
   resolve_round()
   
 def init_game():
-  #Sets up the game environment in case weve never been run before.
+  #Sets up the game environment.
   #Also a good place to put commands which should only be run once.
   config = repository.get_config()
   os.environ["GITHUB_USERNAME"] = config["git_login"]
@@ -115,7 +115,7 @@ if __name__ == '__main__':
   #Start the database
   database_process = subprocess.Popen(["mongod"])
   #give the database a chance to start up
-  sleep(5)
+  time.sleep(5)
   #Do first time setup/onetime commands
   init_game()
   #START THE GAME
