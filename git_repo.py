@@ -19,7 +19,8 @@ def get_players():
   player_data = json.loads(response.text)
   players = []
   for player in player_data:
-    players.append(player['login'])
+    if player['login'] != os.environ.get("GITHUB_USERNAME"):
+      players.append(player['login'])
   return players
 
 def get_votes(pull_id):
