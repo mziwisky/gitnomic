@@ -59,7 +59,7 @@ If it's your turn, then make a pull request! I recommend forking the repository 
 
 Once your pull request is up, find all of your fellow collaborators and tell them to vote. Leave plenty of time for this since you require EVERYONE to approve in the first ten rounds. If someone denies your pull request, you can modify it and ask them to approve it again. Each time you update your PR youll have to get everyone to reapprove.
 
-And dont forget to approve your own pull request! Then wait for the end of the round for your change to be incorporated.
+Then wait for the end of the round for your change to be incorporated.
 
 If it isn't your turn, wait until the player whos turn it is makes their pull request. Then approve or deny it as you see fit. If you deny it, make sure to say why!
 
