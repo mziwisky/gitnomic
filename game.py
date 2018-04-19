@@ -79,22 +79,11 @@ def resolve_round():
         #Assing points and close
         assign_points(votes, players, pull, False)
         git_repo.close(pull)
+	#Only one pull request per player per round.
     break;
   #get the next player and advance the round
   next_player = pick_next_player(players)
   repository.advance_round(next_player)
-  
-def play_round():
-  #Start the game server
-  game_server = Process(target = server.start_server)
-  game_server.start()
-  #Wait until the end of the round
-  time.sleep(604800) #1 week
-  #End the server
-  game_server.terminate()
-  return
-  #Finish the round
-  resolve_round()
   
 def init_game():
   #Sets up the game environment.
@@ -110,6 +99,18 @@ def init_game():
     #Save that weve set up the db
     config['db_setup'] = "complete"
     repository.set_config(config)
+  
+def play_round():
+  #Start the game server
+  game_server = Process(target = server.start_server)
+  game_server.start()
+  #Wait until the end of the round
+  time.sleep(604800) #1 week
+  #End the server
+  game_server.terminate()
+  return
+  #Finish the round
+  resolve_round()
   
 if __name__ == '__main__':
   #Start the database
