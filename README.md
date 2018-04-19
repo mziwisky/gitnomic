@@ -47,7 +47,25 @@ Just like in nomic, players earn points for proposing changes and having them vo
 And of course, just like in the original the game starts off a little bit broken. Lots of things need to be fixed and
 changed and the game has a good jumping off point for anyone who jumps in.
 
-# Running the game:
+##Okay, so how do I play?
+
+If someone else has already set up the game and you just want to know how to play heres what to do.
+
+First, familiarise yourself with both the code and the style guide.
+
+Then check whose turn it is. When the game initially starts up, turns cycle through players and give each player a week to propose their change and get people to vote on it.
+
+If it's your turn, then make a pull request! I recommend forking the repository in github, cloning it onto your machine, making changes there, pushing those changes up to your forked repository, and then finally creating a pull request from your fork.
+
+Once your pull request is up, find all of your fellow collaborators and tell them to vote. Leave plenty of time for this since you require EVERYONE to approve in the first ten rounds. If someone denies your pull request, you can modify it and ask them to approve it again. Each time you update your PR youll have to get everyone to reapprove.
+
+And dont forget to approve your own pull request! Then wait for the end of the round for your change to be incorporated.
+
+If it isn't your turn, wait until the player whos turn it is makes their pull request. Then approve or deny it as you see fit. If you deny it, make sure to say why!
+
+You can make PR's even if it isn't your turn. This might give you extra time to collect approvals. If you make multiple PRs though, one will be selected semi-randomly
+
+## Running the game:
 
 I recommend running gitnomic on its own server with root permissions.
 Log in as root and clone the repository into /
@@ -76,4 +94,4 @@ Config.json needs to be given some information to tie it to your git repository.
 
 `./start.sh`
 
-Check that the server is running by visiting port 80 on your servers ip address. You should see the player whose turn it now is.
+Check that the server is running by visiting port 80 on your servers ip address. You should see the player whose turn it now is displayed on the page.
