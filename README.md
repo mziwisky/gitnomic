@@ -1,4 +1,4 @@
-#What is gitnomic?
+# What is gitnomic?
 
 Nomic was a political philosophy game invented in 1982 by Peter Suber. In his own words:
 
@@ -9,7 +9,7 @@ You can find the original rules to that game here: https://legacy.earlham.edu/~p
 Gitnomic then is an adaptation of nomic to programming. Instead of players voting on changes to a set of rules,
 they create pull requests to change a shared code base.
 
-##What exactly does gitnomic do?
+### What exactly does gitnomic do?
 
 When you run the initial ruleset, it starts up:
 
@@ -27,7 +27,7 @@ security and stability to it. And still others will want to break it somehow. On
 I reccomend running nomic as the root user is so that players have the maximum freedom to turn
 the application into the game they want to play.
 
-##Whats different?
+### Whats different?
 
 In the original nomic, players struggled with mutable vs immutable rules. The players were forced to decide which
 rules were important enough to add to the 'constitution' of the game and which weren't. In gitnomic, changing any
@@ -38,7 +38,7 @@ and insecure. It's up to the players to determine how to implement all of the fe
 modern development.
 
 
-##Whats the same?
+### Whats the same?
 
 Just like in the orginal game, the players can change just about everything in the game.
 
@@ -47,7 +47,7 @@ Just like in nomic, players earn points for proposing changes and having them vo
 And of course, just like in the original the game starts off a little bit broken. Lots of things need to be fixed and
 changed and the game has a good jumping off point for anyone who jumps in.
 
-##Okay, so how do I play?
+# Okay, so how do I play?
 
 If someone else has already set up the game and you just want to know how to play heres what to do.
 
@@ -65,16 +65,16 @@ If it isn't your turn, wait until the player whos turn it is makes their pull re
 
 You can make PR's even if it isn't your turn. This might give you extra time to collect approvals. If you make multiple PRs though, one will be selected semi-randomly
 
-## Running the game:
+# Running the game:
 
 I recommend running gitnomic on its own server with root permissions.
 Log in as root and clone the repository into /
 
-###1. Create a new git account and fork the repository.
+### 1. Create a new git account and fork the repository.
 Create a new git account and confirm its email address.
 Then from that account, fork this repository. 
 
-###2. Install prerequisites.
+### 2. Install prerequisites.
 
 On a ubuntu machine, you can run:
 
@@ -83,14 +83,14 @@ On a ubuntu machine, you can run:
 For other distributions, you can replace apt-get with your favorite package manager.
 
 
-###3. Fill out your config.json.
+### 3. Fill out your config.json.
 Config.json needs to be given some information to tie it to your git repository.
 
 * git_login: The name of the account that owns the repository.
 * git_password: The accounts password. This should never be visible unless the players make it.
 * git_repo: The name of the repository the game pulls from.
 
-###4. Start the game!
+### 4. Start the game!
 
 `./start.sh`
 
