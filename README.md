@@ -78,10 +78,9 @@ Then from that account, fork this repository.
 
 On a ubuntu machine, you can run:
 
-`apt-get update && apt-get install mongodb python-pip python-dev build-essential && pip install --upgrade pip`
+`apt-get update && apt-get install mongodb python3-pip && pip3 install --upgrade pip && pkill mongod`
 
 For other distributions, you can replace apt-get with your favorite package manager.
-
 
 ### 3. Fill out your config.json.
 Config.json needs to be given some information to tie it to your git repository.
@@ -92,6 +91,6 @@ Config.json needs to be given some information to tie it to your git repository.
 
 ### 4. Start the game!
 
-`./start.sh`
+`nohup ./start.sh &`
 
 Check that the server is running by visiting port 80 on your servers ip address. You should see the player whose turn it now is displayed on the page.
