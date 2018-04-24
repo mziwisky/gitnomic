@@ -14,7 +14,11 @@ def get_pulls():
   return response
 
 def get_players():
+<<<<<<< HEAD
   url = "https://api.github.com/repos/{}/{}/collaborators".format(os.environ.get("GITHUB_USERNAME"), os.environ.get("GITHUB_REPO"))
+=======
+  url = "https://api.github.com/repos/{}/{}/contributors".format(os.environ.get("GITHUB_USERNAME"), os.environ.get("GITHUB_REPO"))
+>>>>>>> 95764e37082e7fe8aa03554d3f5315262bb2e5ef
   response = requests.get(url, auth=get_auth())
   player_data = json.loads(response.text)
   players = []
