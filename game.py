@@ -108,7 +108,6 @@ def play_round():
   time.sleep(604800) #1 week
   #End the server
   game_server.terminate()
-  return
   #Finish the round
   resolve_round()
   
