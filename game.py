@@ -82,7 +82,7 @@ def resolve_round():
 	#Only one pull request per player per round.
     break;
   #get the next player and advance the round
-  next_player = pick_next_player(players)
+  next_player = pick_next_player(players, current_player)
   repository.advance_round(next_player)
   
 def init_game():
