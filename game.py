@@ -54,7 +54,7 @@ def assign_points(votes, players, pull, approved):
     #201. A number between 0 and 10 for the first player, with the upper limit increasing by one each turn; more points are awarded for more popular proposals.
     round = repository.get_game_state()["currentRound"]
     round = round + 9
-    approval_rate = float(len(votes[0]))/float(len(votes[1]))
+    approval_rate = float(len(votes[0]))/float(len(votes[0]) + len(votes[1]))
     points = math.ceil(round * approval_rate)
     repository.add_points(current, points)
     #204. If and when rule-changes can be adopted without unanimity, the players who vote against winning proposals shall receive 10 points each.
