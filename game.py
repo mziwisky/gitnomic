@@ -17,19 +17,9 @@ def wins(user):
     return False
 
 def is_approved(yay, nay, total):
-  #203. A rule-change is adopted if and only if the vote is unanimous among the eligible voters. If this rule is not amended by the end of the [fith round], it automatically changes to require only a simple majority.
-  #105. Every player is an eligible voter. Every eligible voter must participate in every vote on rule-changes.
-  round = repository.get_game_state()["currentRound"]
-  if round < 10:
-    #unanimous, since players cant vote on their own proposals
-    if yay < total - 1:
-      return False
+  if yay > nay:
     return True
-  else:
-    #simple majority, and every player voted besides the proposer.
-    if yay <= nay and yay + nay == total -1:
-      return False
-    return True
+  return False
   
 def pick_next_player(players, current=None):
   #201. Players shall alternate in alphabetical order by [username].
