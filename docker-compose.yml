@@ -1,0 +1,19 @@
+version: '2'
+
+volumes:
+  mongo-data: {}
+
+services:
+  gitnomic:
+    build: .
+    container_name: "gitnomic"
+    volumes:
+      - .:/usr/src/app
+      - mongo-data:/data/db
+    ports:
+      - "80"
+    environment:
+      VIRTUAL_HOST: gitnomic.docker
+      VIRTUAL_PORT: 80
+      PROTOCOL: http
+      LOCAL_DEV: 1

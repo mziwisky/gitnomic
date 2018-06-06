@@ -1,4 +1,3 @@
-import git_repo
 import server
 import repository
 from multiprocessing import Process
@@ -7,8 +6,12 @@ import time
 import os
 import random
 import math
+if os.environ.get('LOCAL_DEV'):
+  import fake_git_repo as git_repo
+else:
+  import git_repo
 
-#Contains essential game logic. 
+#Contains essential game logic.
 
 def wins(user):
   if user.points > 200:
@@ -20,7 +23,7 @@ def is_approved(yay, nay, total):
   if yay > nay:
     return True
   return False
-  
+
 def pick_next_player(players, current=None):
   #201. Players shall alternate in alphabetical order by [username].
   players.sort()
@@ -60,7 +63,7 @@ def resolve_round():
     #If a player has multiple proposals, we pick the first one
     if pull['user']['login'] == current_player:
       votes = git_repo.get_votes(pull['number'])
-      #We approve all 
+      #We approve all
       if is_approved(len(votes[0]), len(votes[1]), len(players)):
         #Assign points and merge
         assign_points(votes, players, pull, True)
@@ -74,7 +77,7 @@ def resolve_round():
   #get the next player and advance the round
   next_player = pick_next_player(players, current_player)
   repository.advance_round(next_player)
-  
+
 def init_game():
   #Sets up the game environment.
   #Also a good place to put commands which should only be run once.
@@ -89,7 +92,7 @@ def init_game():
     #Save that weve set up the db
     config['db_setup'] = "complete"
     repository.set_config(config)
-  
+
 def play_round():
   #Start the game server
   game_server = Process(target = server.start_server)
@@ -100,7 +103,7 @@ def play_round():
   game_server.terminate()
   #Finish the round
   resolve_round()
-  
+
 if __name__ == '__main__':
   #Start the database
   database_process = subprocess.Popen(["mongod"])
@@ -110,7 +113,7 @@ if __name__ == '__main__':
   init_game()
   #START THE GAME
   play_round()
-  
+
   #Rounds over. Clean up time.
   #Stop the db
   database_process.terminate()

@@ -94,3 +94,11 @@ Config.json needs to be given some information to tie it to your git repository.
 `nohup ./start.sh &`
 
 Check that the server is running by visiting port 80 on your servers ip address. You should see the player whose turn it now is displayed on the page.
+
+# Local dev:
+
+Gonna assume you have [Dinghy](https://github.com/codekitchen/dinghy) installed. Then just:
+
+    docker-compose up
+
+And you can visit it at [http://gitnomic.docker/](http://gitnomic.docker/).
